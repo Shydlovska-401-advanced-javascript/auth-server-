@@ -8,7 +8,7 @@ const mongooseOptions = {
   useCreateIndex: true,
   useUnifiedTopology: true,
 };
-mongoose.connect('mongodb://localhost:27017/users', mongooseOptions);
+mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 
 
 require('./server.js').start(process.env.PORT);

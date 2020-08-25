@@ -21,7 +21,6 @@ router.post('/signin', auth, (req, res, next) => {
     
     
 })
-
 router.get('/users',(req, res, next) => {
     user.find()
     .then(info => {
