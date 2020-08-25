@@ -2,11 +2,10 @@
 
 require('@code-fellows/supergoose');
 const server = require('../server.js')
-// const supergoose = require('../supergoose.js')
 const auth = require('../src/auth/middleware.js')
 const Users = require('../src/auth/users.schema.js')
 
-// const mockRequest = supergoose(server);
+const mockRequest = supergoose(server);
 
 
 // POST to /signup to create a new user

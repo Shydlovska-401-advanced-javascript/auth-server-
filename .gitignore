@@ -142,3 +142,23 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/vim,osx,node,linux,windows
+
+*.wit
+*.bson
+collection-0--7658827562321393045.wt
+collection-2--7658827562321393045.wt
+collection-4--7658827562321393045.wt
+collection-8--7658827562321393045.wt
+index-1--7658827562321393045.wt
+index-3--7658827562321393045.wt
+index-5--7658827562321393045.wt
+index-6--7658827562321393045.wt
+index-9--7658827562321393045.wt
+mongod.lock
+sizeStorer.wt
+storage.bson
+WiredTiger
+WiredTiger.lock
+WiredTiger.turtle
+WiredTiger.wt
+WiredTigerLAS.wt

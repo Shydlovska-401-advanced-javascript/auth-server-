@@ -13,13 +13,11 @@ const users = mongoose.Schema({
   
 });
 
-users.pre('save', async function(){
+users.pre('create', async function(){
     if(this.isModified('password')){
         bcrypt.genSalt(10, function(err, salt){
             bcrypt.hash(this.password, salt, function(e, hash) {
                 return hash;
-
-        
             });
         
         })
