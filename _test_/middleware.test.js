@@ -38,24 +38,4 @@ describe('user authentication', () => {
 
   });
 
-  it('logs in an admin user with the right credentials', async () => {
-
-    // admin:password: YWRtaW46cGFzc3dvcmQ=
-
-    let req = {
-      headers: {
-        authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
-      },
-    };
-
-    let res = {};
-
-    let next = jest.fn();
-
-    await auth(req, res, next);
-
-    expect(next).toHaveBeenCalledWith();
-
-  });
-
 });
