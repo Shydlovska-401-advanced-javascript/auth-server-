@@ -5,7 +5,6 @@ const auth = require('./middleware.js')
 const user = require('./users.schema.js')
 
 router.post('/signup', (req,res, next) => {
-    console.log(req.body, 'is here')
     user.create(req.body)
     .then(userInfo =>{
         res.status(200).json(userInfo)
