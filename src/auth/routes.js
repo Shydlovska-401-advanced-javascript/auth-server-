@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('./middleware.js')
 const user = require('./users.schema.js')
+const oauth = require('./oaut-middleware.js')
 
 router.post('/signup', (req,res, next) => {
     console.log(req.body, 'is here')
@@ -18,9 +19,14 @@ router.post('/signin', auth, (req, res, next) => {
          token: req.token,
          user: req.user
      })
+    })
+
+router.get('/oauth', oauth, (req, res) => {
+        res.status(200).send(req.token);
+    });
     
     
-})
+
 router.get('/users',(req, res, next) => {
     user.find()
     .then(info => {
@@ -28,6 +34,8 @@ router.get('/users',(req, res, next) => {
     })   
     
 })
+
+
 
 
 
