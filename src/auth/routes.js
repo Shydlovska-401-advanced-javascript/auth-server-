@@ -6,9 +6,13 @@ const user = require('./users.schema.js')
 const oauth = require('./oaut-middleware.js')
 
 router.post('/signup', (req,res, next) => {
-    console.log(req.body, 'is here')
     user.create(req.body)
     .then(userInfo =>{
+    //     let token = user.generateToken()
+    //     let responce = {
+    //         'user': userInfo,
+    //         'token': token
+    //     }
         res.status(200).json(userInfo)
     })
 })
