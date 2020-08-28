@@ -7,14 +7,7 @@ const oauth = require('./oaut-middleware.js')
 
 router.post('/signup', (req,res, next) => {
     user.create(req.body)
-    .then(userInfo =>{
-    //     let token = user.generateToken()
-    //     let responce = {
-    //         'user': userInfo,
-    //         'token': token
-    //     }
-        res.status(200).json(userInfo)
-    })
+    .then(userInfo =>res.status(200).json(userInfo));
 })
 
 router.post('/signin', auth, (req, res, next) => { 

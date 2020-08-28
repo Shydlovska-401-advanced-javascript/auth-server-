@@ -8,7 +8,7 @@ module.exports =  async (req, res, next) => {
     
 
   // req.headers.authorization should be : "Basic sdkjdsljd="
-//   console.log(req.header('authorization'))
+  console.log('authorization');
   if (!req.headers.authorization) { next({'message': 'Invalid User ID/Password', 'status': 401, 'statusMessage': 'Unauthorized'}); return; }
   
 //   or return simple 'Invalid login'
@@ -22,11 +22,11 @@ module.exports =  async (req, res, next) => {
   try {
   const validUser = await users.authenticateBasic(user, pass);
   req.token = validUser.generateToken();
-  console.log("i'm hereeeeeeeeeeeeeeeeeeee")
   req.user = validUser;
   next();
 
     } catch (err) {
+      console.log("console.error();");
   next({ 'message': 'Invalid User ID/Password', 'status': 401, 'statusMessage': 'Unauthorized' });
 }
 

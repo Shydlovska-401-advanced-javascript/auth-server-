@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+const moment = require('moment');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -12,18 +14,6 @@ const users = mongoose.Schema({
   role: { type: String, enum: ['admin', 'editor', 'writer', 'user'], required: true} ,
   
 });
-
-// users.pre('create', async function(){
-//     if(this.isModified('password')){
-//         bcrypt.genSalt(10, function(err, salt){
-//             bcrypt.hash(this.password, salt, function(e, hash) {
-//                 return hash;
-//             });
-        
-//         })
-//     }
-  
-// });
 
 users.pre('save', async function(){
     if(this.isModified('password')){
@@ -41,6 +31,15 @@ users.statics.authenticateBasic = async function(username, password){
     
 }
 
+users.statics.authenticateToken = async function (token){
+    let expDate = new moment(token.iat).add(1, 'h');
+    let now = new moment();
+    if(!now.isBefore(expDate)){
+        return Promise.reject('Expared token')
+    }
+    let parsedToken = jwt.verify(token, process.env.SECRET);
+    return this.findById(parsedToken.id);
+};
 
 users.methods.comparePassword = async function(plainPassword){
     let isValid =  await bcrypt.compare(plainPassword, this.password)
@@ -50,7 +49,12 @@ users.methods.comparePassword = async function(plainPassword){
 }
 
 users.methods.generateToken = function(){
-     return jwt.sign({ role: this.role}, process.env.SECRET);
+    let token = {
+        id: this._id,
+        role: this.role,
+    }
+    let result = jwt.sign(token, process.env.SECRET)
+     return result;
 }
 
 
@@ -65,7 +69,14 @@ users.statics.createFromOauth = async function(email){
      } else{
         return this.create({username: email, password: 'none', email:email, role: 'admin'});
     }
+
+  
 }
+
+
+
+
+
 
 module.exports = mongoose.model('users', users);
 

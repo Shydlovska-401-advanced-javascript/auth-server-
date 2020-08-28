@@ -12,6 +12,8 @@ const CLIENT_SECRET = '137d7219c4f005f3967723603b0021fb6f5809b9';
 module.exports = async function authorize(req, res, next) {
 
     try {
+      console.log("______________________________________________________________________")
+
       let code = req.query.code;
       console.log('(1) CODE:', code);
   
@@ -27,7 +29,11 @@ module.exports = async function authorize(req, res, next) {
       console.log('(4) LOCAL USER', user);
   
       next();
-    } catch (e) { next(`ERROR: ${e.message}`) };
+    } catch (e) { 
+       console.log(e)
+      next(`ERROR: ${e.message}`);
+    
+    };
   
   };
   
@@ -68,8 +74,7 @@ module.exports = async function authorize(req, res, next) {
     };
   
     let user = await users.create(userRecord);
-    let token = users.generateToken(user);
+    let token = user.generateToken();
   
     return [user, token];
-  
   }

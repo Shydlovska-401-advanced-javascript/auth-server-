@@ -6,6 +6,8 @@ const base64 = require('base-64');
 const jwt = require('jsonwebtoken');
 const route = require('./src/auth/routes.js')
 const oauth = require('./src/auth/oaut-middleware.js')
+const extraRoute = require('./src/auth/extra-routes.js')
+const bearerAuth = require('./src/auth/bearer-auth.js')
 
 
 
@@ -16,7 +18,9 @@ const app = express();
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(route);
+app.use(extraRoute);
 app.use(oauth);
+app.use(bearerAuth);
 
 
 
