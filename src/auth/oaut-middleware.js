@@ -12,8 +12,6 @@ const CLIENT_SECRET = '137d7219c4f005f3967723603b0021fb6f5809b9';
 module.exports = async function authorize(req, res, next) {
 
     try {
-      console.log("______________________________________________________________________")
-
       let code = req.query.code;
       console.log('(1) CODE:', code);
   

@@ -6,12 +6,17 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const SECRET = process.env.SECRET || 'supersecret';
+
+const usedTokens = new Set();
+
 const users = mongoose.Schema({
   username: { type: String, required: true },
   password :{ type: String, required: true },
   email: { type: String },
   fullname: { type: String},
-  role: { type: String, enum: ['admin', 'editor', 'writer', 'user'], required: true} ,
+  role: { type: String, default: 'user', enum: ['admin', 'editor', 'writer', 'user']} ,
+  capabilities: { type: Array, required: true, default: [] },
   
 });
 
@@ -21,6 +26,25 @@ users.pre('save', async function(){
        
     }
   
+let role = this.role;
+
+if(this.isModified('role')) {
+
+    switch (role) {
+    case 'admin':
+      this.capabilities = ['create', 'read', 'update', 'delete'];
+      break;
+    case 'editor':
+      this.capabilities = ['create', 'read', 'update'];
+      break;
+    case 'writer':
+      this.capabilities = ['create', 'read'];
+      break;
+    case 'user':
+      this.capabilities = ['read'];
+      break;
+    }
+  }
 });
 
 

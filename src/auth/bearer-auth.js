@@ -11,20 +11,20 @@ module.exports = async (req, res, next) => {
   // Pull out just the encoded part by splitting the header into an array on the space and popping off the 2nd element
   let token = req.headers.authorization.split(' ').pop();
 
-  //Notice that here, we're catching the errors from the user model.
-  // users.authenticateToken(token)
-  //   .then(validUser => {
-  //     req.user = validUser;
-  //     next();
-  //   })
-  //   .catch(err => next('Invalid Login'));
+  console.log(token)
 
 
   try{
   
  const validUser = await users.authenticateToken(token);
- console.log(validUser, 'validdddddddddddddddddd')
  req.user = validUser;
+
+ req.user = {
+  username: validUser.username,
+  fullname: validUser.fullname,
+  email: validUser.email,
+  capabilities: validUser.capabilities,
+};
  next();
 
   } catch (err) {

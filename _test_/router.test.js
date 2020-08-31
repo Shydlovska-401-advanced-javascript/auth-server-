@@ -28,14 +28,6 @@ describe('Auth Router', () => {
         const results = await mockRequest.post('/signup').send(users[userType]);
         console.log(results.body, 'fugvsu;')
 
-        // expect(results.body.user).toBeDefined();
-
-        // expect(results.body.token).toBeDefined();
-
-        // const token = jwt.verify(results.body.token, process.env.SECRET);
-
-        // expect(token.role).toBe(userType);
-
       });
 
       it('can signin with basic', async () => {

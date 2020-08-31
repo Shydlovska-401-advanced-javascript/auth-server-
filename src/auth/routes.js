@@ -6,6 +6,7 @@ const user = require('./users.schema.js')
 const oauth = require('./oaut-middleware.js')
 
 router.post('/signup', (req,res, next) => {
+    console.log(req.body)
     user.create(req.body)
     .then(userInfo =>res.status(200).json(userInfo));
 })
